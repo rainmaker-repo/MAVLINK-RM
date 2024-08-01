@@ -53,3 +53,42 @@ To add new custom MAVLink messages for the Rainmaker fork, follow these steps:
      python3 -m pymavlink.tools.mavgen --lang=C --wire-protocol=2.0 --output=generated/include/mavlink/v2.0 message_definitions/v1.0/common.xml
      ```
    This command will generate headers that include both the common messages and your custom Rainmaker messages.
+
+# Using pymavlink with Custom Messages
+
+To use the custom MAVLink library with pymavlink, follow these steps:
+
+1. Install the custom MAVLink library:
+   - First, uninstall any existing pymavlink versions:
+     ```bash
+     pip uninstall pymavlink
+     ```
+   - Navigate to the pymavlink directory:
+     ```bash
+     cd pymavlink
+     ```
+   - Install the custom pymavlink with the new headers:
+     ```bash
+     python3 setup.py install --user
+     ```
+
+2. Using the custom MAVLink library:
+   When using mavutil or other pymavlink modules, you need to ensure you're importing the correct version with your custom messages. Here's how to do it:
+
+   - In your Python script, import mavutil and the latest dialect like this:
+     ```python
+     from pymavlink import mavutil
+     from pymavlink.dialects.v20 import common as mavlink2
+     ```
+   - When creating a connection, specify the dialect:
+     ```python
+     the_connection = mavutil.mavlink_connection('udpin:localhost:14540', ...)
+     ```
+   - Now you can use your custom messages:
+     ```python
+     msg = the_connection.recv_match(type='RAINMAKER_CUSTOM_MSG', blocking=True)
+     if msg:
+         print(f"Received custom message: {msg.data_value}")
+     ```
+
+Remember to regenerate and reinstall the pymavlink library whenever you make changes to the XML message definitions.
