@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<mavlink>
+    <version>3</version>
+    <dialect>0</dialect>
+    <messages>
+        <!--BME280 DATA MESSAGE-->
+        <message id="500" name="BME280">
+            <description>Data from the BME280 sensor</description>
+            <field type="uint64_t" name="time_boot_ms">Timestamp (microseconds since boot)</field>
+            <field type="float" name="temperature" units="degC">Temperature in degrees Celsius</field>
+            <field type="float" name="pressure" units="hPa">Pressure in hPa</field>
+            <field type="float" name="humidity" units="%">Humidity (%)</field>
+        </message>
+        <!--SHT41 DATA MESSAGE-->
+        <message id="501" name="SHT41">
+            <description>Data from the SHT41 sensor</description>
+            <field type="uint64_t" name="time_boot_ms">Timestamp (microseconds since boot)</field>
+            <field type="float" name="temperature" units="degC">Temperature in degrees Celsius</field>
+            <field type="float" name="humidity" units="%">Humidity (%)</field>
+        </message>
+    </messages>
+</mavlink>
